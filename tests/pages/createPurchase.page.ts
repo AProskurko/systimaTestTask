@@ -1,11 +1,10 @@
 import { Page, expect } from "@playwright/test";
 import { LoginPage } from "./login.page";
 import { checkTextColor } from "../utils/functions";
-import { settingsHard, settingsLight } from "../utils/hydrationSettings";
+import { settingsLight } from "../utils/hydrationSettings";
 import { FormData } from "../utils/testDataFile";
 
 //* Page object representing the Purchase creation page and its operations
-
 
 export class CreatePurchasePage extends LoginPage {
   private readonly locators = {
@@ -147,7 +146,7 @@ export class CreatePurchasePage extends LoginPage {
   async verifySubmitPost(): Promise<void> {
     await expect(async () => {
       await expect(this.locators.confirmSubmit).toBeVisible();
-    }).toPass();
+    }).toPass(settingsLight);
   }
 
   // Verify that there was an error submitting the form
