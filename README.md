@@ -22,7 +22,7 @@ PNPM package manager (v10.6.5 or later)
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/systima.git
+git clone https://github.com/AProskurko/systimaTestTask.git
 cd systima
 npm install -g pnpm 
 pnpm install
