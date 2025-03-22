@@ -23,7 +23,7 @@ Clone the repository and install dependencies:
 
 ```bash
 git clone https://github.com/AProskurko/systimaTestTask.git
-cd systima
+cd systimaTestTask
 npm install -g pnpm 
 pnpm install
 ```
