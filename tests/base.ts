@@ -1,6 +1,8 @@
 import { test as base, BrowserContext, Page } from "@playwright/test";
 import * as path from "path";
 
+let sharedContext: BrowserContext;
+let sharedPage: Page;
 let allErrors: Error[] = [];
 
 // Extend the base test with custom fixtures
@@ -11,16 +13,18 @@ export const test = base.extend<{
 }>({
   // Provide a new browser context for each test
   context: async ({ browser }, use) => {
-    const context = await browser.newContext();
-    await use(context);
-    await context.close();
+    if (!sharedContext) {
+      sharedContext = await browser.newContext();
+    }
+    await use(sharedContext);
   },
 
   // Provide a new page for each test
   page: async ({ context }, use) => {
-    const page = await context.newPage();
-    await use(page);
-    await page.close();
+    if (!sharedPage) {
+      sharedPage = await context.newPage();
+    }
+    await use(sharedPage);
   },
 
   // Log exceptions and take screenshots on page errors
@@ -46,6 +50,13 @@ export const test = base.extend<{
 
 // Attach all collected errors to the test report
 test.afterAll(async () => {
+  if (sharedPage) {
+    await sharedPage.close();
+  }
+  if (sharedContext) {
+    await sharedContext.close();
+  }
+
   if (allErrors.length > 0) {
     await test.info().attach("frontend-exceptions", {
       body: allErrors.map((error) => error.stack).join("\n-----\n"),
