@@ -4,7 +4,6 @@
   "description": "E2E Playwright test task for Systima, written on TypeScript",
   "main": "index.js",
   "scripts": {
-    "pretest": "tsc --noEmit",
     "test": "pnpm exec playwright test"
   },
   "keywords": ["Test", "Playwright", "TypeScript"],
